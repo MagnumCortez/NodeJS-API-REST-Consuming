@@ -28,6 +28,35 @@
 					return false;
 				});
 
+				$('#btn-publicar').click(function() {
+
+					/*Instanciar FormData*/
+					var formData = new FormData();
+
+					var titulo = document.getElementById("titulo").value;
+					var arquivo = document.getElementById('arquivo').files[0];
+
+					formData.append("titulo", titulo);
+					formData.append("arquivo", arquivo);
+
+					/*Instanciar XMLHttpRequest*/
+					var xhr = new XMLHttpRequest();
+
+					/*Verificar Mudança de Estado*/
+					xhr.onreadystatechange = function() {
+						/*Se requisição foi completada*/
+						if (xhr.readyState == 4) {
+							/*Recuperando mensagem "Response"*/
+							var resposta = xhr.responseText;
+							document.getElementById('mensagem').innerHTML = resposta;
+						}
+					};
+
+					/*Fazer envio do Request*/
+					xhr.open("POST", "http://localhost:8080/api");
+					xhr.send(formData);
+				})
+
 			});
 		</script>
 
